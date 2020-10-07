@@ -3,24 +3,28 @@ var myGamePiece;
 var myObstacles = [];
 var myscore;
 
+// Add keyboard events for up, down, left and right arrow keys
 document.onkeydown = function (e) {
   switch (e.keyCode) {
     case 37:
-      console.log('Left Key pressed!');
       moveleft();
       break;
     case 38:
-      console.log('Up Key pressed!');
       moveup();
       break;
     case 39:
-      console.log('Right Key pressed!');
       moveright();
       break;
     case 40:
-      console.log('Down Key pressed!');
       movedown();
       break;
+  }
+}
+
+document.onkeyup = function (e) {
+  let keyCodeArray = [37, 38, 39, 40];
+  if (keyCodeArray.includes(e.keyCode)) {
+    clearmove();
   }
 }
 
