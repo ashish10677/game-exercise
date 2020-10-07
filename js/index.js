@@ -172,4 +172,4 @@ function clearmove(e) {
   myGamePiece.speedY = 0;
 }
 
-startGame();
+// startGame();
