@@ -24,27 +24,12 @@ function signUpUser() {
             console.log(result)
             if (result.success) {
                 alert("User registered successfully!");
-            } else {
-                alert(`Error in registering user! ${result.message}`)
+                return;
             }
+            showError(result.message);
         }).catch(error => {
             console.log('error', error)
         });
-}
-
-function getCookie(cname) {
-    let name = cname + "=";
-    let ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return;
 }
 
 function loginUser() {
@@ -54,10 +39,6 @@ function loginUser() {
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     let raw = { "email": "ashish1076@gmail.com", "password": "ashish12345" };
-
-    if (getCookie('auth')) {
-        raw['auth'] = getCookie('auth');
-    }
 
     let requestOptions = {
         method: 'POST',
@@ -73,13 +54,99 @@ function loginUser() {
         .then(result => {
             console.log(result);
             if (result.success) {
-                alert("Login successful!")
-            } else {
-                alert(result.message);
+                alert("Login successful!");
+                return;
             }
+            showError(result.message);
         })
         .catch(error => {
             console.log('error', error)
         });
 }
 
+function setScore(score) {
+    let myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    let raw = { "score": score };
+
+    let requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: JSON.stringify(raw),
+        redirect: 'follow',
+        mode: 'cors',
+        credentials: 'include'
+    };
+
+    fetch(`${BASE_URL}/setscore`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                console.log("Score updated");
+                return;
+            }
+            showError(result.message);
+        }).catch(error => {
+            console.log(error);
+        })
+}
+
+function isAllowed() {
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        credentials: 'include'
+    };
+
+    return fetch(`${BASE_URL}/attempts`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            return result.isAllowed
+        })
+        .catch(error => console.log('error', error));
+}
+
+function getProfile() {
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        credentials: 'include'
+    };
+
+    fetch(`${BASE_URL}/profile`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
+            if (result.success) {
+                alert(`${result.name}, High Score: ${result.highScore}`)
+                return;
+            }
+            showError(result.message);
+        })
+        .catch(error => console.log('error', error));
+}
+
+function logoutUser() {
+    let requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+        credentials: 'include'
+    };
+
+    fetch(`${BASE_URL}/logout`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                alert("You have logged out successfully!");
+                return;
+            }
+            showError(result.message);
+        })
+        .catch(error => console.log('error', error));
+}
+
+function showError(errMessage) {
+    alert(`ERROR: ${errMessage}`);
+}

@@ -45,7 +45,16 @@ function startGame() {
   myGameArea = new gamearea();
   myGamePiece = new component(30, 30, "red", 10, 75);
   myscore = new component("15px", "Consolas", "black", 220, 25, "text");
-  myGameArea.start();
+  isAllowed().then((res) => {
+    if (res) {
+      myGameArea.start();
+    }
+    else {
+      alert("You have already exceeded the number of trials to start the game!")
+    }
+  }).catch((err) => {
+    alert("Error in starting game")
+  })
 }
 
 function gamearea() {
@@ -113,6 +122,7 @@ function updateGameArea() {
   for (i = 0; i < myObstacles.length; i += 1) {
     if (myGamePiece.crashWith(myObstacles[i])) {
       myGameArea.stop();
+      setScore(myscore.score);
       document.getElementById("myfilter").style.display = "block";
       document.getElementById("myrestartbutton").style.display = "block";
       return;
@@ -172,4 +182,5 @@ function clearmove(e) {
   myGamePiece.speedY = 0;
 }
 
-startGame();
+getProfile()
+// startGame();
