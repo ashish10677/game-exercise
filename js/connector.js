@@ -130,7 +130,7 @@ function getProfile() {
 
     fetch(`${BASE_URL}/profile`, requestOptions)
         .then(response => response.json())
-        .then(result => {
+        .then(async result => {
             console.log(result);
             if (result.success) {
                 if (window.location.href != 'http://localhost:8080/game.html')
@@ -138,10 +138,12 @@ function getProfile() {
                 document.getElementById('welcome').innerHTML = `Welcome ${result.name}`;
                 document.getElementById('highscore').innerHTML = `High Score ${result.highScore}`;
                 generateTable(result.gamesPlayed);
-                return;
+                let allowed = await isAllowed();
+                if (!allowed) {
+                    document.getElementById('game-starter').disabled = true;
+                }
             }
-            // showError(result.message);
-            if (window.location.href != 'http://localhost:8080/index.html')
+            else if (window.location.href != 'http://localhost:8080/index.html')
                 window.location.replace('http://localhost:8080/index.html')
         })
         .catch(error => console.log('error', error));

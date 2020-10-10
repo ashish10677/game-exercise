@@ -42,14 +42,13 @@ function restartGame() {
 }
 
 function startGame() {
-  document.getElementById("scores-table").style.display = 'none';
   document.getElementById("game-starter").style.display = 'none';
   document.getElementById("game").style.display = 'block';
   myGameArea = new gamearea();
   myGamePiece = new component(30, 30, "red", 10, 75);
   myscore = new component("15px", "Consolas", "black", 220, 25, "text");
   isAllowed().then((res) => {
-    if (!res) {
+    if (res) {
       myGameArea.start();
     }
     else {
