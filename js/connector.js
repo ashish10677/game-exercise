@@ -41,12 +41,17 @@ function signUpUser() {
 }
 
 function loginUser() {
-    // let email = document.getElementById('signupEmail').value;
-    // let password = document.getElementById('email').value;
+    let email = document.getElementById('login-email').value;
+    let password = document.getElementById('login-password').value;
+
+    if (!email || !password) {
+        alert("Email and password are required!");
+        return;
+    }
 
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    let raw = { "email": "ashish1076@gmail.com", "password": "ashish12345" };
+    let raw = { email, password };
 
     let requestOptions = {
         method: 'POST',
@@ -129,7 +134,10 @@ function getProfile() {
             console.log(result);
             if (result.success) {
                 if (window.location.href != 'http://localhost:8080/game.html')
-                    window.location.replace('http://localhost:8080/game.html')
+                    window.location.replace('http://localhost:8080/game.html');
+                document.getElementById('welcome').innerHTML = `Welcome ${result.name}`;
+                document.getElementById('highscore').innerHTML = `High Score ${result.highScore}`;
+                generateTable(result.gamesPlayed);
                 return;
             }
             // showError(result.message);

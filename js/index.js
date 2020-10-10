@@ -42,11 +42,14 @@ function restartGame() {
 }
 
 function startGame() {
+  document.getElementById("scores-table").style.display = 'none';
+  document.getElementById("game-starter").style.display = 'none';
+  document.getElementById("game").style.display = 'block';
   myGameArea = new gamearea();
   myGamePiece = new component(30, 30, "red", 10, 75);
   myscore = new component("15px", "Consolas", "black", 220, 25, "text");
   isAllowed().then((res) => {
-    if (res) {
+    if (!res) {
       myGameArea.start();
     }
     else {
@@ -182,5 +185,32 @@ function clearmove(e) {
   myGamePiece.speedY = 0;
 }
 
+function getDateTime(dateIsoString) {
+  if (!dateIsoString) {
+    return;
+  }
+  let d = new Date(dateIsoString);
+  return d.toLocaleString();
+}
+
+function generateTable(tableData) {
+  let table = document.getElementById("scores-table");
+  if (!tableData || tableData.length === 0) {
+    table.style.display = 'none'
+    return;
+  }
+  let sortedData = tableData.sort((a, b) => new Date(b.playedAt) - new Date(a.playedAt));
+  sortedData = sortedData.slice(0, 10);
+  for (let dataIndex in sortedData) {
+    let rowCount = table.rows.length;
+    let row = table.insertRow(rowCount);
+    let cell1 = row.insertCell(0);
+    let cell2 = row.insertCell(1);
+    let cell3 = row.insertCell(2);
+    cell1.innerHTML = Number(dataIndex) + 1;
+    cell2.innerHTML = getDateTime(tableData[dataIndex].playedAt);
+    cell3.innerHTML = tableData[dataIndex].score;
+  }
+}
+
 getProfile()
-// startGame();
