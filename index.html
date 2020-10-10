@@ -4,29 +4,66 @@
 <head>
   <meta charset="UTF-8">
   <title>Game Exercise</title>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="index.css">
 </head>
 
 <body>
-  <p>Click the buttons to move the red square:</p>
-  <div id="myfilter"
-    style="position:absolute;background-color:#000000;opacity:0.3;width:322px;height:182px;display:none"></div>
-  <div id="myrestartbutton" style="position:absolute;padding-top:75px;padding-left:120px;display:none;"><button
-      onclick="restartGame()">Restart</button></div>
-  <div id="canvascontainer"></div>
-  <br>
-  <div style="text-align:center;width:320px;">
-    <button ontouchstart="moveup()" onmousedown="moveup()" onmouseup="clearmove()">UP</button><br><br>
-    <button ontouchstart="moveleft()" onmousedown="moveleft()" onmouseup="clearmove()">LEFT</button>
-    <button ontouchstart="moveright()" onmousedown="moveright()" onmouseup="clearmove()">RIGHT</button><br><br>
-    <button ontouchstart="movedown()" onmousedown="movedown()" onmouseup="clearmove()">DOWN</button>
+  <!-- <div id="game" style="display: none;">
+    <p>Click the buttons to move the red square:</p>
+    <div id="myfilter"
+      style="position:absolute;background-color:#000000;opacity:0.3;width:322px;height:182px;display:none"></div>
+    <div id="myrestartbutton" style="position:absolute;padding-top:75px;padding-left:120px;display:none;"><button
+        onclick="restartGame()">Restart</button></div>
+    <div id="canvascontainer"></div>
+    <br>
+    <div style="text-align:center;width:320px;">
+      <button ontouchstart="moveup()" onmousedown="moveup()" onmouseup="clearmove()">UP</button><br><br>
+      <button ontouchstart="moveleft()" onmousedown="moveleft()" onmouseup="clearmove()">LEFT</button>
+      <button ontouchstart="moveright()" onmousedown="moveright()" onmouseup="clearmove()">RIGHT</button><br><br>
+      <button ontouchstart="movedown()" onmousedown="movedown()" onmouseup="clearmove()">DOWN</button>
+    </div>
+    <div>
+      <button onclick="signUpUser()">Sign Up</button>
+      <button onclick="loginUser()">Log In</button>
+      <button onclick="logoutUser()">Log Out</button>
+    </div>
+  </div> -->
+
+  <div class="login-reg-panel" id="login-reg">
+    <div class="login-info-box">
+      <h2>Have an account?</h2>
+      <label id="label-register" for="log-reg-show">Login</label>
+      <input type="radio" name="active-log-panel" id="log-reg-show" checked="checked">
+    </div>
+
+    <div class="register-info-box">
+      <h2>Don't have an account?</h2>
+      <label id="label-login" for="log-login-show">Register</label>
+      <input type="radio" name="active-log-panel" id="log-login-show">
+    </div>
+
+    <div class="white-panel">
+      <div class="login-show">
+        <h2>LOGIN</h2>
+        <input type="text" placeholder="Email" id="login-email">
+        <input type="password" placeholder="Password" id="login-password">
+        <input type="button" value="Login" onclick="loginUser()">
+      </div>
+      <div class="register-show">
+        <h2>REGISTER</h2>
+        <input type="text" placeholder="Name" id="register-name">
+        <input type="text" placeholder="Email" id="register-email">
+        <input type="password" placeholder="Password" id="register-password">
+        <input type="password" placeholder="Confirm Password" id="register-confirm">
+        <input type="button" value="Register" onclick="signUpUser()">
+      </div>
+    </div>
   </div>
-  <div>
-    <button onclick="signUpUser()">Sign Up</button>
-    <button onclick="loginUser()">Log In</button>
-    <button onclick="logoutUser()">Log Out</button>
-  </div>
+  <script src="js/jquery.js"></script>
   <script src="js/connector.js"></script>
-  <script src="js/index.js"></script>
 </body>
 
 </html>

@@ -1,14 +1,22 @@
 const BASE_URL = 'http://localhost:3000/user'
 
 function signUpUser() {
-    // let email = document.getElementById('signupEmail').value;
-    // let name = document.getElementById('name').value;
-    // let password = document.getElementById('email').value;
-
+    let email = document.getElementById('register-email').value;
+    let name = document.getElementById('register-name').value;
+    let password = document.getElementById('register-password').value;
+    let confirmPassword = document.getElementById('register-confirm').value;
+    if (!email || !name || !password) {
+        alert("Fields are required!");
+        return;
+    }
+    if (password != confirmPassword) {
+        alert("Passwords don't match!");
+        return;
+    }
     let myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    let raw = JSON.stringify({ "firstName": "Ashish", "email": "ashish1076@gmail.com", "password": "ashish12345", "attempts": 0 });
+    let raw = JSON.stringify({ "firstName": name, "email": email, "password": password, "attempts": 0 });
 
     let requestOptions = {
         method: 'POST',
@@ -54,7 +62,7 @@ function loginUser() {
         .then(result => {
             console.log(result);
             if (result.success) {
-                alert("Login successful!");
+                window.location.replace('http://localhost:8080/game.html')
                 return;
             }
             showError(result.message);
@@ -120,10 +128,13 @@ function getProfile() {
         .then(result => {
             console.log(result);
             if (result.success) {
-                alert(`${result.name}, High Score: ${result.highScore}`)
+                if (window.location.href != 'http://localhost:8080/game.html')
+                    window.location.replace('http://localhost:8080/game.html')
                 return;
             }
-            showError(result.message);
+            // showError(result.message);
+            if (window.location.href != 'http://localhost:8080/index.html')
+                window.location.replace('http://localhost:8080/index.html')
         })
         .catch(error => console.log('error', error));
 }
@@ -139,7 +150,9 @@ function logoutUser() {
         .then(response => response.json())
         .then(result => {
             if (result.success) {
-                alert("You have logged out successfully!");
+                // alert("You have logged out successfully!");
+                if (window.location.href != 'http://localhost:8080/index.html')
+                    window.location.replace('http://localhost:8080/index.html')
                 return;
             }
             showError(result.message);
