@@ -31,7 +31,7 @@ function signUpUser() {
         .then(result => {
             console.log(result)
             if (result.success) {
-                alert("User registered successfully!");
+                alert("User registered successfully! Please login to continue.");
                 return;
             }
             showError(result.message);
